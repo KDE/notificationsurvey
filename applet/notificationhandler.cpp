@@ -51,6 +51,8 @@ void NotificationHandler::init()
     m_engine->connectAllSources(this);
     connect(m_engine, SIGNAL(sourceAdded(const QString&)),
             this, SLOT(prepareNotification(const QString&)));
+    connect(m_engine, SIGNAL(sourceRemoved(const QString&)),
+            this, SLOT(teardownNotification(const QString&)));
 }
 
 NotificationHandler::~NotificationHandler()
@@ -63,8 +65,10 @@ NotificationHandler::~NotificationHandler()
 void NotificationHandler::prepareNotification(const QString& source)
 {
     kDebug() << "prepping new notification";
-    if (m_engine) {
+    bool isNew = !m_notifications.contains(source);
+    if (m_engine && isNew) {
         kDebug() << "new source is" << source;
+        m_notifications.append(source);
         m_engine->connectSource(source, this);
     }
     
@@ -73,14 +77,31 @@ void NotificationHandler::prepareNotification(const QString& source)
 void NotificationHandler::dataUpdated(const QString& source,
                                       const Plasma::DataEngine::Data& data)
 {
+    bool isNew = !m_notifications.contains(source);
 
-    kWarning() << "New notification from" << source;
+    if (isNew) {
+        kWarning() << "New notification from" << source;
+    }
+    else
+        return;
+
     kWarning() << "appname:" << data.value("appName").toString();
     kWarning() << "appicon:" << data.value("appIcon").toString();
     kWarning() << "summary:" << data.value("summary").toString();
     kWarning() << "body:" << data.value("body").toString();
 
+
 }
+
+void NotificationHandler::teardownNotification(const QString& source)
+{
+    if (m_notifications.contains(source)) {
+        kDebug() << "removing source" << source;
+        m_notifications.removeAll(source);
+    }
+}
+
+
 
 #include "notificationhandler.moc"
 /* vim: set et tw=78 sts=4 sw=4 ts=16 : */

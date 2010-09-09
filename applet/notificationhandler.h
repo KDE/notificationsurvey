@@ -39,13 +39,15 @@ public:
     void init();
 
 private slots:
-    void prepareNotification(const QString&);
+    void prepareNotification(const QString& source);
     void dataUpdated(const QString& source, 
                      const Plasma::DataEngine::Data &data);
+    void teardownNotification(const QString& source);
     
 
 private:
     Plasma::DataEngine* m_engine;
+    QStringList m_notifications;
 };
 
 
