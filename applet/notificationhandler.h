@@ -28,6 +28,7 @@
 #include <Plasma/DataEngine>
 
 class QString;
+class Notification;
 
 class NotificationHandler: public QObject
 {
@@ -38,6 +39,10 @@ public:
 
     void init();
 
+signals:
+    void notificationCreated(Notification*);
+    void notificationUpdated(Notification*);
+
 private slots:
     void prepareNotification(const QString& source);
     void dataUpdated(const QString& source, 
@@ -47,7 +52,7 @@ private slots:
 
 private:
     Plasma::DataEngine* m_engine;
-    QStringList m_notifications;
+    QHash<QString, Notification*> m_notifications;
 };
 
 

@@ -28,6 +28,8 @@
 #include <Plasma/Service>
 #include <Plasma/ServiceJob>
 
+#include "notification.h"
+
 static const char engineName[] = "notifications";
 
 NotificationHandler::NotificationHandler(QObject* parent)
@@ -65,10 +67,8 @@ NotificationHandler::~NotificationHandler()
 void NotificationHandler::prepareNotification(const QString& source)
 {
     kDebug() << "prepping new notification";
-    bool isNew = !m_notifications.contains(source);
-    if (m_engine && isNew) {
+    if (m_engine) {
         kDebug() << "new source is" << source;
-        m_notifications.append(source);
         m_engine->connectSource(source, this);
     }
     
@@ -81,23 +81,30 @@ void NotificationHandler::dataUpdated(const QString& source,
 
     if (isNew) {
         kWarning() << "New notification from" << source;
+        Notification *notification = new Notification(this);
+        m_notifications[source] = notification;
     }
-    else
-        return;
 
-    kWarning() << "appname:" << data.value("appName").toString();
-    kWarning() << "appicon:" << data.value("appIcon").toString();
-    kWarning() << "summary:" << data.value("summary").toString();
-    kWarning() << "body:" << data.value("body").toString();
+    Notification* notification = m_notifications[source];
+    notification->captureScreenshot();
+    notification->setApplicationName(data.value("appName").toString());
+    notification->setMessage(data.value("body").toString());
 
-
+    if (isNew) {
+        kDebug() << "emitting notificationCreated";
+        emit notificationCreated(notification);
+    } else {
+        kDebug() << "emitting notificationUpdated";
+        emit notificationUpdated(notification);
+    }
+        
 }
 
 void NotificationHandler::teardownNotification(const QString& source)
 {
     if (m_notifications.contains(source)) {
         kDebug() << "removing source" << source;
-        m_notifications.removeAll(source);
+        m_notifications.remove(source);
     }
 }
 
