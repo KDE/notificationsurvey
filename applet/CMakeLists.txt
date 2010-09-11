@@ -2,6 +2,7 @@
 set(notificationsurvey_SRCS
     surveyapplet.cpp
     notificationhandler.cpp
+    notification.cpp
     )
  
 # Now make sure all files get to the right place
