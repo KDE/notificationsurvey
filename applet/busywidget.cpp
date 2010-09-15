@@ -26,10 +26,14 @@
 
 
 BusyWidget::BusyWidget(Plasma::PopupApplet* parent)
- : Plasma::BusyWidget(parent)
+ : Plasma::BusyWidget(parent),
+   m_svg(new Plasma::Svg(this))
 {
     setAcceptsHoverEvents(true);
-    setRunning(false);    
+    m_svg->setImagePath("icons/notification");
+    m_svg->setContainsMultipleImages(true);
+    setRunning(false);
+
 }
 
 BusyWidget::~BusyWidget()
@@ -41,7 +45,14 @@ void BusyWidget::paint(QPainter* painter,
                        const QStyleOptionGraphicsItem* option,
                        QWidget* widget)
 {
+    QRectF iconRect(0,
+                    0,
+                    qMin(size().width(), size().height()),
+                    qMin(size().width(), size().height()));
 
+    iconRect.moveCenter(boundingRect().center());
+
+    m_svg->paint(painter, iconRect, "notification-active");
 }
 
 void BusyWidget::setState(State state)

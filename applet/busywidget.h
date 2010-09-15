@@ -55,7 +55,7 @@ protected:
     void resizeEvent(QGraphicsSceneResizeEvent* event);
 
 private:
-
+    Plasma::Svg* m_svg;
 };
 
 
