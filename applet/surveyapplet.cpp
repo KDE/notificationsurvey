@@ -23,13 +23,18 @@
 
 #include "surveyapplet.h"
 
-#include <QtGui/QPainter>
+#include <QPainter>
+#include <QStyleOptionGraphicsItem>
+#include <QGraphicsLinearLayout>
+
+#include <KDE/KIconLoader>
 
 #include <Plasma/Extender>
 #include <Plasma/ToolTipContent>
 #include <Plasma/ToolTipManager>
 
 #include "notificationhandler.h"
+#include "busywidget.h"
 
 K_EXPORT_PLASMA_APPLET(notificationsurvey, NotificationsSurvey)
 
@@ -37,9 +42,13 @@ NotificationsSurvey::NotificationsSurvey(QObject* parent,
                                          const QVariantList &arguments)
     : Plasma::PopupApplet(parent, arguments),
       m_icon("applications-system"),
-      m_handler(new NotificationHandler(this))
+      m_handler(new NotificationHandler(this)),
+      m_busyWidget(0)
 {
-    setBackgroundHints(DefaultBackground);
+    setPopupIcon("view-pim-journal");
+    setBackgroundHints(NoBackground);
+    setAspectRatioMode(Plasma::IgnoreAspectRatio);
+    setMinimumSize(KIconLoader::SizeSmall, KIconLoader::SizeSmall);
     
 }
 
@@ -55,21 +64,15 @@ void NotificationsSurvey::init()
                                 KIcon("dialog-information"));
     Plasma::ToolTipManager::self()->setContent(this, data);
    
-    m_handler->init(); 
+    m_handler->init();
+
+    m_busyWidget = new BusyWidget(this);
+    QGraphicsLinearLayout* layout = new QGraphicsLinearLayout(this);
+    setContentsMargins(0, 0, 0, 0);
+    layout->setContentsMargins(0, 0, 0, 0);
+    layout->addItem(m_busyWidget);
 }
 
-void NotificationsSurvey::paintInterface(QPainter *p,
-                                         const QStyleOptionGraphicsItem *option,
-                                         const QRect& contentsRect)
-{
-    Q_UNUSED(option);
-
-    p->setRenderHint(QPainter::SmoothPixmapTransform);
-    p->setRenderHint(QPainter::Antialiasing);
-
-    // We place the icon
-    p->drawPixmap(7, 7, m_icon.pixmap((int)contentsRect.width(),(int)contentsRect.height()-14 ));
-}
 
 #include "surveyapplet.moc"
 

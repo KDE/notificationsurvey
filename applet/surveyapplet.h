@@ -26,7 +26,12 @@
 #include <Plasma/PopupApplet>
 #include <KDE/KIcon>
 
+class QObject;
+class QPainter;
+class QStyleOptionGraphicsItem;
+
 class NotificationHandler;
+class BusyWidget;
 
 class NotificationsSurvey: public Plasma::PopupApplet
 {
@@ -40,15 +45,11 @@ public:
 
     virtual void init();
 
-    virtual void paintInterface(QPainter *p,
-                                const QStyleOptionGraphicsItem *option,
-                                const QRect& contentsRect);
-
 private:
     KIcon m_icon;
     NotificationHandler* m_handler;
+    BusyWidget* m_busyWidget;
 };
-
 
 #endif
 /* vim: set et sts=4 sw=4 ts=16 tw=78 : */
