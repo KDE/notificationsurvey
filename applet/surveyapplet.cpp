@@ -45,10 +45,8 @@ NotificationsSurvey::NotificationsSurvey(QObject* parent,
       m_handler(new NotificationHandler(this)),
       m_busyWidget(0)
 {
-    setPopupIcon("view-pim-journal");
     setBackgroundHints(NoBackground);
     setAspectRatioMode(Plasma::IgnoreAspectRatio);
-    setMinimumSize(KIconLoader::SizeSmall, KIconLoader::SizeSmall);
     
 }
 
@@ -71,6 +69,7 @@ void NotificationsSurvey::init()
     setContentsMargins(0, 0, 0, 0);
     layout->setContentsMargins(0, 0, 0, 0);
     layout->addItem(m_busyWidget);
+    setStatus(Plasma::NeedsAttentionStatus);
 }
 
 

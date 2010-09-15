@@ -60,9 +60,10 @@ void BusyWidget::setState(State state)
 
 }
 
-void BusyWidget::resizeEvent(QGraphicsSceneResizeEvent* event)
+void BusyWidget::resizeEvent(QGraphicsSceneResizeEvent*)
 {
-
+    m_svg->resize(contentsRect().size());
+    m_svg->resize();
 }
 
 #include "busywidget.moc"
