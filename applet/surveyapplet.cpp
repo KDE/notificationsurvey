@@ -38,12 +38,32 @@
 
 K_EXPORT_PLASMA_APPLET(notificationsurvey, NotificationsSurvey)
 
+class NotificationsSurvey::Private
+{
+public:
+    Private()
+    : icon("applications-system"),
+      handler(new NotificationHandler),
+      busyWidget(0)
+    {
+
+    }
+
+    ~Private()
+    {
+        delete handler;
+        delete busyWidget;
+    }
+
+    KIcon icon;
+    NotificationHandler* handler;
+    BusyWidget* busyWidget;
+};
+
 NotificationsSurvey::NotificationsSurvey(QObject* parent,
                                          const QVariantList &arguments)
     : Plasma::PopupApplet(parent, arguments),
-      m_icon("applications-system"),
-      m_handler(new NotificationHandler(this)),
-      m_busyWidget(0)
+      d(new NotificationsSurvey::Private)
 {
     setBackgroundHints(NoBackground);
     setAspectRatioMode(Plasma::IgnoreAspectRatio);
@@ -52,7 +72,7 @@ NotificationsSurvey::NotificationsSurvey(QObject* parent,
 
 NotificationsSurvey::~NotificationsSurvey()
 {
-
+    delete d;
 }
 
 void NotificationsSurvey::init()
@@ -62,13 +82,13 @@ void NotificationsSurvey::init()
                                 KIcon("dialog-information"));
     Plasma::ToolTipManager::self()->setContent(this, data);
    
-    m_handler->init();
+    d->handler->init();
 
-    m_busyWidget = new BusyWidget(this);
+    d->busyWidget = new BusyWidget(this);
     QGraphicsLinearLayout* layout = new QGraphicsLinearLayout(this);
     setContentsMargins(0, 0, 0, 0);
     layout->setContentsMargins(0, 0, 0, 0);
-    layout->addItem(m_busyWidget);
+    layout->addItem(d->busyWidget);
     setStatus(Plasma::NeedsAttentionStatus);
 }
 

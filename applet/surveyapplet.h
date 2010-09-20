@@ -30,9 +30,6 @@ class QObject;
 class QPainter;
 class QStyleOptionGraphicsItem;
 
-class NotificationHandler;
-class BusyWidget;
-
 class NotificationsSurvey: public Plasma::PopupApplet
 {
 Q_OBJECT
@@ -46,9 +43,9 @@ public:
     virtual void init();
 
 private:
-    KIcon m_icon;
-    NotificationHandler* m_handler;
-    BusyWidget* m_busyWidget;
+    class Private;
+    Private* const d;
+
 };
 
 #endif
