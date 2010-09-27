@@ -1,5 +1,5 @@
 /*
- * Notification Survey Applet
+ * Notifications Survey Control Widget
  *
  * Copyright 2010 Matt Rogers <mattr@kde.org>
  *
@@ -20,45 +20,28 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SURVEYAPPLET_H
-#define SURVEYAPPLET_H
+#include <QtGui/QGraphicsWidget>
 
-#include <Plasma/PopupApplet>
-#include <KDE/KIcon>
+namespace Plasma
+{
+    class PopupApplet;
+}
 
-class QObject;
-class QPainter;
-class QStyleOptionGraphicsItem;
+class NotificationsSurvey;
 
-class NotificationsSurvey: public Plasma::PopupApplet
+class SurveyControlWidget : public QGraphicsWidget
 {
 Q_OBJECT
 
 public:
-    explicit NotificationsSurvey(QObject* parent = 0,
-                                 const QVariantList &arguments = QVariantList());
+    SurveyControlWidget(Plasma::PopupApplet* parent = 0);
+    virtual ~SurveyControlWidget();
 
-    virtual ~NotificationsSurvey();
-
-    virtual void init();
-
-    QDateTime surveyEndDate() const;
-
-    bool isSurveyStarted() const;
-
-    void initExtenderItem(Plasma::ExtenderItem* item);
-
-public Q_SLOTS:
+private slots:
     void startSurvey();
 
 private:
-    void configChanged();
-
-private:
-    class Private;
-    Private* const d;
-
+    NotificationsSurvey* m_applet;
 };
 
-#endif
-/* vim: set et sts=4 sw=4 ts=16 tw=78 : */
+/* vim: set et fenc= ff=unix sts=4 sw=4 ts=16 : */

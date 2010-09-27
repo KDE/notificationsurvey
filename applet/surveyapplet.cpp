@@ -32,9 +32,11 @@
 #include <Plasma/Extender>
 #include <Plasma/ToolTipContent>
 #include <Plasma/ToolTipManager>
+#include <Plasma/ExtenderItem>
 
 #include "notificationhandler.h"
 #include "busywidget.h"
+#include "surveycontrolwidget.h"
 
 K_EXPORT_PLASMA_APPLET(notificationsurvey, NotificationsSurvey)
 
@@ -44,7 +46,8 @@ public:
     Private()
     : icon("applications-system"),
       handler(new NotificationHandler),
-      busyWidget(0)
+      busyWidget(0),
+      isSurveyStarted(false)
     {
 
     }
@@ -58,6 +61,9 @@ public:
     KIcon icon;
     NotificationHandler* handler;
     BusyWidget* busyWidget;
+    SurveyControlWidget* surveyControlWidget;
+    bool isSurveyStarted;
+    QDateTime surveyEndDate;
 };
 
 NotificationsSurvey::NotificationsSurvey(QObject* parent,
@@ -67,7 +73,7 @@ NotificationsSurvey::NotificationsSurvey(QObject* parent,
 {
     setBackgroundHints(NoBackground);
     setAspectRatioMode(Plasma::IgnoreAspectRatio);
-    
+    setPopupIcon(QIcon());
 }
 
 NotificationsSurvey::~NotificationsSurvey()
@@ -84,12 +90,73 @@ void NotificationsSurvey::init()
    
     d->handler->init();
 
+    extender()->setEmptyExtenderMessage(i18n("Listening for notifications"));
+
     d->busyWidget = new BusyWidget(this);
+    connect(d->busyWidget, SIGNAL(clicked()), this, SLOT(togglePopup()));
     QGraphicsLinearLayout* layout = new QGraphicsLinearLayout(this);
     setContentsMargins(0, 0, 0, 0);
     layout->setContentsMargins(0, 0, 0, 0);
     layout->addItem(d->busyWidget);
     setStatus(Plasma::NeedsAttentionStatus);
+
+    configChanged();
+
+    Plasma::ExtenderItem* eitem = new Plasma::ExtenderItem(extender());
+    eitem->setName("notifications");
+    eitem->setIcon("dialog-information");
+    eitem->config().writeEntry("type", "notificationsurvey");
+    initExtenderItem(eitem);
+    extender()->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
+}
+
+void NotificationsSurvey::configChanged()
+{
+    KConfigGroup cg = config();
+
+    d->isSurveyStarted = cg.readEntry("SurveyStarted", false);
+    kDebug() << "Survey status - started: " << d->isSurveyStarted;
+    if (d->isSurveyStarted) {
+        QString dateString = cg.readEntry("SurveyEndDate");
+        d->surveyEndDate = QDateTime::fromString(dateString);
+        kDebug() << "Survey end date: " << d->surveyEndDate;
+    }
+}
+
+void NotificationsSurvey::startSurvey()
+{
+    d->isSurveyStarted = true;
+
+    KConfigGroup cg = config();
+    cg.writeEntry("SurveyStarted", d->isSurveyStarted); 
+
+    d->surveyEndDate = QDateTime::currentDateTime();
+    d->surveyEndDate.addDays(28); //convert from magic number
+    cg.writeEntry("SurveyEndDate", d->surveyEndDate.toString());
+
+    emit configNeedsSaving();
+}
+
+QDateTime NotificationsSurvey::surveyEndDate() const
+{
+    return d->surveyEndDate;
+}
+
+bool NotificationsSurvey::isSurveyStarted() const
+{
+    return d->isSurveyStarted;
+}
+
+void NotificationsSurvey::initExtenderItem(Plasma::ExtenderItem* item)
+{
+    kDebug() << "initializing extender item";
+    if (item->name() == "notifications") {
+        //item->setIcon("dialog-information");
+        d->surveyControlWidget = new SurveyControlWidget(this);
+        item->setWidget(d->surveyControlWidget);
+        //item->setTitle(i18n("Notifications Survey"));
+    }
 }
 
 
