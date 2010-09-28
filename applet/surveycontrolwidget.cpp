@@ -47,11 +47,8 @@ SurveyControlWidget::SurveyControlWidget(Plasma::PopupApplet* parent)
                              .arg(m_applet->surveyEndDate().toString()));
 
     m_layout = new QGraphicsGridLayout(this);
-    m_layout->setContentsMargins(0, 0, 0, 0);
-    m_layout->setColumnStretchFactor(0, 5);
-    m_layout->setColumnStretchFactor(2, 5);
-    m_layout->setRowStretchFactor(0,5);
-    m_layout->setRowStretchFactor(3,5);
+    m_layout->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    //m_layout->setContentsMargins(0, 0, 0, 0);
     m_layout->addItem(m_surveyStatus, 1, 1);
     m_layout->addItem(m_surveyEndDate, 2, 1);
     m_layout->addItem(m_startButton, 1, 1);
