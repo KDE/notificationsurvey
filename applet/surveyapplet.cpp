@@ -113,7 +113,7 @@ void NotificationsSurvey::init()
 
 void NotificationsSurvey::configChanged()
 {
-    KConfigGroup cg = config();
+    KConfigGroup cg = config("notifications_survey");
 
     d->isSurveyStarted = cg.readEntry("SurveyStarted", false);
     kDebug() << "Survey status - started: " << d->isSurveyStarted;
@@ -128,11 +128,11 @@ void NotificationsSurvey::startSurvey()
 {
     d->isSurveyStarted = true;
 
-    KConfigGroup cg = config();
-    cg.writeEntry("SurveyStarted", d->isSurveyStarted); 
+    KConfigGroup cg = config("notifications_survey");
+    cg.writeEntry("SurveyStarted", d->isSurveyStarted);
 
     d->surveyEndDate = QDateTime::currentDateTime();
-    d->surveyEndDate.addDays(28); //convert from magic number
+    d->surveyEndDate = d->surveyEndDate.addDays(28); //convert from magic number
     cg.writeEntry("SurveyEndDate", d->surveyEndDate.toString());
 
     emit configNeedsSaving();
@@ -152,10 +152,10 @@ void NotificationsSurvey::initExtenderItem(Plasma::ExtenderItem* item)
 {
     kDebug() << "initializing extender item";
     if (item->name() == "notifications") {
-        //item->setIcon("dialog-information");
+        item->setIcon("dialog-information");
         d->surveyControlWidget = new SurveyControlWidget(this);
         item->setWidget(d->surveyControlWidget);
-        //item->setTitle(i18n("Notifications Survey"));
+        item->setTitle(i18n("Notification Survey Status"));
     }
 }
 
