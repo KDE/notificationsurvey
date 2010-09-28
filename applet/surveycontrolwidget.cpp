@@ -29,34 +29,52 @@
 #include "surveyapplet.h"
 
 SurveyControlWidget::SurveyControlWidget(Plasma::PopupApplet* parent)
- : QGraphicsWidget(parent)
+ : QGraphicsWidget(parent),
+   m_layout(0)
 {
     m_applet = qobject_cast<NotificationsSurvey*>(parent);
-    QGraphicsGridLayout* gridLayout = new QGraphicsGridLayout(this);
-    gridLayout->setContentsMargins(0, 0, 0, 0);
-    gridLayout->setColumnStretchFactor(0, 5);
-    gridLayout->setColumnStretchFactor(2, 5);
-    gridLayout->setRowStretchFactor(0,5);
-    gridLayout->setRowStretchFactor(3,5);
+
+
+    m_startButton = new Plasma::PushButton(this);
+    m_startButton->setText(i18n("Start Survey"));
+    connect(m_startButton, SIGNAL(clicked()),
+            this, SLOT(startSurvey()));
+
+    m_surveyStatus = new Plasma::Label(this);
+    m_surveyEndDate = new Plasma::Label(this);
+    m_surveyStatus->setText(i18n("Survey in progress")); 
+    m_surveyEndDate->setText(i18nc("placeholder is a date", "Ends: %1")
+                             .arg(m_applet->surveyEndDate().toString()));
+
+    m_layout = new QGraphicsGridLayout(this);
+    m_layout->setContentsMargins(0, 0, 0, 0);
+    m_layout->setColumnStretchFactor(0, 5);
+    m_layout->setColumnStretchFactor(2, 5);
+    m_layout->setRowStretchFactor(0,5);
+    m_layout->setRowStretchFactor(3,5);
+    m_layout->addItem(m_surveyStatus, 1, 1);
+    m_layout->addItem(m_surveyEndDate, 2, 1);
+    m_layout->addItem(m_startButton, 1, 1);
+
+    updateSurveyStatus();
+}
+
+void SurveyControlWidget::updateSurveyStatus()
+{
 
     if (!m_applet->isSurveyStarted()) {
-
-        Plasma::PushButton* startButton = new Plasma::PushButton(this);
-        startButton->setText(i18n("Start Survey"));
-
-        connect(startButton, SIGNAL(clicked()),
-                this, SLOT(startSurvey()));
-        gridLayout->addItem(startButton, 1, 1);
+        m_surveyStatus->hide();
+        m_surveyEndDate->hide();
+        m_startButton->show();
     } else {
-        Plasma::Label *surveyStatus = new Plasma::Label(this);
-        Plasma::Label *surveyEndDate = new Plasma::Label(this);
-        surveyStatus->setText(i18n("Survey in progress")); 
-        surveyEndDate->setText(i18nc("placeholder is a date", "Ends %1")
-                               .arg(m_applet->surveyEndDate().toString()));
-        gridLayout->addItem(surveyStatus, 1, 1);
-        gridLayout->addItem(surveyEndDate, 2, 1);
+        m_startButton->hide();
+        m_surveyStatus->show();
+        m_surveyEndDate->show();
     }
-    
+
+    m_layout->invalidate();
+    update();
+
 }
 
 SurveyControlWidget::~SurveyControlWidget()
@@ -67,4 +85,5 @@ SurveyControlWidget::~SurveyControlWidget()
 void SurveyControlWidget::startSurvey()
 {
     m_applet->startSurvey();
+    updateSurveyStatus();
 }

@@ -24,9 +24,12 @@
 
 namespace Plasma
 {
+    class Label;
+    class PushButton;
     class PopupApplet;
 }
 
+class QGraphicsGridLayout;
 class NotificationsSurvey;
 
 class SurveyControlWidget : public QGraphicsWidget
@@ -37,11 +40,18 @@ public:
     SurveyControlWidget(Plasma::PopupApplet* parent = 0);
     virtual ~SurveyControlWidget();
 
+private:
+    void updateSurveyStatus();
+
 private slots:
     void startSurvey();
 
 private:
     NotificationsSurvey* m_applet;
+    QGraphicsGridLayout* m_layout;
+    Plasma::PushButton* m_startButton;
+    Plasma::Label* m_surveyStatus;
+    Plasma::Label* m_surveyEndDate;
 };
 
 /* vim: set et fenc= ff=unix sts=4 sw=4 ts=16 : */
