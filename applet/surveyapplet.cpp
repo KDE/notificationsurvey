@@ -34,8 +34,9 @@
 #include <Plasma/ToolTipManager>
 #include <Plasma/ExtenderItem>
 
-#include "notificationhandler.h"
 #include "busywidget.h"
+#include "surveydata.h"
+#include "notificationhandler.h"
 #include "surveycontrolwidget.h"
 
 K_EXPORT_PLASMA_APPLET(notificationsurvey, NotificationsSurvey)
@@ -47,7 +48,8 @@ public:
     : icon("applications-system"),
       handler(new NotificationHandler),
       busyWidget(0),
-      isSurveyStarted(false)
+      surveyControlWidget(0),
+      surveyData(new SurveyData)
     {
 
     }
@@ -55,15 +57,14 @@ public:
     ~Private()
     {
         delete handler;
-        delete busyWidget;
+        delete surveyData;
     }
 
     KIcon icon;
     NotificationHandler* handler;
     BusyWidget* busyWidget;
     SurveyControlWidget* surveyControlWidget;
-    bool isSurveyStarted;
-    QDateTime surveyEndDate;
+    SurveyData* surveyData;
 };
 
 NotificationsSurvey::NotificationsSurvey(QObject* parent,
@@ -111,41 +112,25 @@ void NotificationsSurvey::init()
 
 }
 
-void NotificationsSurvey::configChanged()
-{
-    KConfigGroup cg = config("notifications_survey");
-
-    d->isSurveyStarted = cg.readEntry("SurveyStarted", false);
-    kDebug() << "Survey status - started: " << d->isSurveyStarted;
-    if (d->isSurveyStarted) {
-        QString dateString = cg.readEntry("SurveyEndDate");
-        d->surveyEndDate = QDateTime::fromString(dateString);
-        kDebug() << "Survey end date: " << d->surveyEndDate;
-    }
-}
 
 void NotificationsSurvey::startSurvey()
 {
-    d->isSurveyStarted = true;
+    d->surveyData->setSurveyStarted(true);
 
-    KConfigGroup cg = config("notifications_survey");
-    cg.writeEntry("SurveyStarted", d->isSurveyStarted);
+    QDateTime surveyEndDate = QDateTime::currentDateTime();
+    surveyEndDate = surveyEndDate.addDays(28); //convert from magic number
 
-    d->surveyEndDate = QDateTime::currentDateTime();
-    d->surveyEndDate = d->surveyEndDate.addDays(28); //convert from magic number
-    cg.writeEntry("SurveyEndDate", d->surveyEndDate.toString());
-
-    emit configNeedsSaving();
+    d->surveyData->setSurveyEndDate(surveyEndDate);
 }
 
 QDateTime NotificationsSurvey::surveyEndDate() const
 {
-    return d->surveyEndDate;
+    return d->surveyData->surveyEndDate();
 }
 
 bool NotificationsSurvey::isSurveyStarted() const
 {
-    return d->isSurveyStarted;
+    return d->surveyData->isSurveyStarted();
 }
 
 void NotificationsSurvey::initExtenderItem(Plasma::ExtenderItem* item)

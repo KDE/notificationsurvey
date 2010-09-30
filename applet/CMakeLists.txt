@@ -7,6 +7,7 @@ set(notificationsurvey_SRCS
     notification.cpp
     busywidget.cpp
     surveycontrolwidget.cpp
+    surveydata.cpp
     )
  
 # Now make sure all files get to the right place
