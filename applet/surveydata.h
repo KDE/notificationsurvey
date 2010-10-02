@@ -23,7 +23,11 @@
 #ifndef SURVEYCONFIGURATION_H
 #define SURVEYCONFIGURATION_H
 
+
+#include <QtCore/QStringList>
+
 #include <KDE/KSharedConfig>
+
 
 class SurveyData
 {
@@ -40,6 +44,7 @@ public:
 
 private:
     KSharedConfig::Ptr m_config;
+    QStringList m_applicationList;
 };
 
 #endif

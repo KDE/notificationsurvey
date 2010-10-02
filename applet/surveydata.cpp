@@ -50,6 +50,22 @@ SurveyData::SurveyData()
     m_config = KSharedConfig::openConfig(componentData,
                                          surveyFileInfo.canonicalFilePath());
 
+    KConfigGroup cg(m_config, CONFIG_GROUP_NAME);
+    m_applicationList = cg.readEntry("AppsToListenFor", QStringList());
+    if (m_applicationList.isEmpty()) {
+        m_applicationList << "kmail"
+                          << "akregator"
+                          << "choqok"
+                          << "konversation"
+                          << "kopete";
+                          /* still need:
+                           * quassel
+                           * mail indicator
+                           * other apps
+                           */
+    }
+
+    cg.writeEntry("AppsToListenFor", m_applicationList);
 }
 
 SurveyData::~SurveyData()
