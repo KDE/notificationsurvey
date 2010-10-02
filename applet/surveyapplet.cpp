@@ -90,7 +90,7 @@ void NotificationsSurvey::init()
     Plasma::ToolTipManager::self()->setContent(this, data);
 
     if (d->surveyData->isSurveyStarted()) {
-        d->handler->init();
+        initializeHandler();
     }
 
     extender()->setEmptyExtenderMessage(i18n("Listening for notifications"));
@@ -124,7 +124,6 @@ void NotificationsSurvey::startSurvey()
 
     d->surveyData->setSurveyEndDate(surveyEndDate);
 
-    d->handler->init();
 }
 
 QDateTime NotificationsSurvey::surveyEndDate() const
@@ -148,6 +147,10 @@ void NotificationsSurvey::initExtenderItem(Plasma::ExtenderItem* item)
     }
 }
 
+void NotificationsSurvey::initializeHandler()
+{
+    d->handler->init();
+}
 
 #include "surveyapplet.moc"
 

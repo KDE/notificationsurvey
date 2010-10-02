@@ -51,6 +51,8 @@ public:
 public Q_SLOTS:
     void startSurvey();
 
+private:
+    void initializeHandler();
 
 private:
     class Private;
