@@ -49,7 +49,7 @@ void NotificationHandler::init()
         Plasma::DataEngineManager::self()->unloadEngine(engineName);
         return;
     }
-    
+
     m_engine->connectAllSources(this);
     connect(m_engine, SIGNAL(sourceAdded(const QString&)),
             this, SLOT(prepareNotification(const QString&)));
@@ -71,7 +71,7 @@ void NotificationHandler::prepareNotification(const QString& source)
         kDebug() << "new source is" << source;
         m_engine->connectSource(source, this);
     }
-    
+
 }
 
 void NotificationHandler::dataUpdated(const QString& source,
@@ -86,9 +86,10 @@ void NotificationHandler::dataUpdated(const QString& source,
     }
 
     Notification* notification = m_notifications[source];
-    notification->captureScreenshot();
     notification->setApplicationName(data.value("appName").toString());
+    notification->setSummary(data.value("summary").toString());
     notification->setMessage(data.value("body").toString());
+    notification->setActionList(data.value("actions").toStringList());
 
     if (isNew) {
         kDebug() << "emitting notificationCreated";
@@ -97,7 +98,7 @@ void NotificationHandler::dataUpdated(const QString& source,
         kDebug() << "emitting notificationUpdated";
         emit notificationUpdated(notification);
     }
-        
+
 }
 
 void NotificationHandler::teardownNotification(const QString& source)

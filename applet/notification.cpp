@@ -22,8 +22,10 @@
 
 #include "notification.h"
 
-#include <QtGui/QPixmap>
 #include <QtCore/QString>
+#include <QtCore/QDateTime>
+
+#include <QtGui/QPixmap>
 #include <QtGui/QApplication>
 #include <QtGui/QDesktopWidget>
 
@@ -33,14 +35,17 @@ class Notification::Private
 public:
     QPixmap screenshot;
     QString applicationName;
+    QString summary;
     QString message;
+    QDateTime timestamp;
+    QStringList actionList;
 
 };
 
 Notification::Notification(QObject* parent)
    : QObject(parent), d(new Private)
 {
-
+    updateTimestamp();
 }
 
 Notification::~Notification()
@@ -55,7 +60,7 @@ void Notification::captureScreenshot()
 
 QPixmap Notification::screenshot() const
 {
-    return d->screenshot;    
+    return d->screenshot;
 }
 
 void Notification::setApplicationName(const QString& appName)
@@ -68,6 +73,16 @@ QString Notification::applicationName() const
     return d->applicationName;
 }
 
+void Notification::setSummary(const QString& summary)
+{
+    d->summary = summary;
+}
+
+QString Notification::summary() const
+{
+    return d->summary;
+}
+
 void Notification::setMessage(const QString& message)
 {
     d->message = message;
@@ -75,7 +90,22 @@ void Notification::setMessage(const QString& message)
 
 QString Notification::message() const
 {
-    return d->message;    
+    return d->message;
+}
+
+void Notification::updateTimestamp()
+{
+    d->timestamp = QDateTime::currentDateTime();
+}
+
+void Notification::setActionList(const QStringList& actionList)
+{
+    d->actionList = actionList;
+}
+
+QStringList Notification::actionList() const
+{
+    return d->actionList;
 }
 
 #include "notification.moc"

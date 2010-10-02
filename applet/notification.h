@@ -24,8 +24,7 @@
 #define NOTIFICATION_H
 
 #include <QtCore/QObject>
-
-class QPixmap;
+#include <KDE/KWindowSystem>
 
 class Notification: public QObject
 {
@@ -35,14 +34,22 @@ public:
     Notification(QObject* parent = 0);
     virtual ~Notification();
 
+    void updateTimestamp();
+
     void captureScreenshot();
     QPixmap screenshot() const;
 
     void setApplicationName(const QString& appName);
     QString applicationName() const;
 
+    void setSummary(const QString& summary);
+    QString summary() const;
+
     void setMessage(const QString& message);
     QString message() const;
+
+    void setActionList(const QStringList& actionList);
+    QStringList actionList() const;
 
 private:
     class Private;
