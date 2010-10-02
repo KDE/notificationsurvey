@@ -88,8 +88,10 @@ void NotificationsSurvey::init()
                                 QString(),
                                 KIcon("dialog-information"));
     Plasma::ToolTipManager::self()->setContent(this, data);
-   
-    d->handler->init();
+
+    if (d->surveyData->isSurveyStarted()) {
+        d->handler->init();
+    }
 
     extender()->setEmptyExtenderMessage(i18n("Listening for notifications"));
 
@@ -121,6 +123,8 @@ void NotificationsSurvey::startSurvey()
     surveyEndDate = surveyEndDate.addDays(28); //convert from magic number
 
     d->surveyData->setSurveyEndDate(surveyEndDate);
+
+    d->handler->init();
 }
 
 QDateTime NotificationsSurvey::surveyEndDate() const
