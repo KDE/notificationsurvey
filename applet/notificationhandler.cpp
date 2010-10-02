@@ -90,6 +90,9 @@ void NotificationHandler::dataUpdated(const QString& source,
     notification->setSummary(data.value("summary").toString());
     notification->setMessage(data.value("body").toString());
     notification->setActionList(data.value("actions").toStringList());
+    notification->updateTimestamp();
+    notification->updateActiveWindow();
+    notification->updateIdleTime();
 
     if (isNew) {
         kDebug() << "emitting notificationCreated";

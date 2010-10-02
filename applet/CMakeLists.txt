@@ -14,7 +14,8 @@ set(notificationsurvey_SRCS
 kde4_add_plugin(plasma_applet_notificationsurvey 
                 ${notificationsurvey_SRCS})
 target_link_libraries(plasma_applet_notificationsurvey
-                      ${KDE4_PLASMA_LIBS} ${KDE4_KDEUI_LIBS})
+                      ${KDE4_PLASMA_LIBS} ${KDE4_KDEUI_LIBS}
+                      ${KDE4_KUTILS_LIBS})
  
 install(TARGETS plasma_applet_notificationsurvey
         DESTINATION ${PLUGIN_INSTALL_DIR})

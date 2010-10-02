@@ -29,6 +29,8 @@
 #include <QtGui/QApplication>
 #include <QtGui/QDesktopWidget>
 
+#include <KDE/KIdleTime>
+
 
 class Notification::Private
 {
@@ -39,6 +41,8 @@ public:
     QString message;
     QDateTime timestamp;
     QStringList actionList;
+    QString activeWindowName;
+    int idleTime;
 
 };
 
@@ -51,6 +55,33 @@ Notification::Notification(QObject* parent)
 Notification::~Notification()
 {
     delete d;
+}
+
+void Notification::updateActiveWindow()
+{
+    WId activeWindowId = KWindowSystem::activeWindow();
+    KWindowInfo activeWindowInfo;
+    activeWindowInfo  = KWindowSystem::windowInfo(activeWindowId,
+                                                  NET::WMName |
+                                                  NET::WMVisibleName);
+    if (activeWindowInfo.valid()) {
+        d->activeWindowName = activeWindowInfo.name();
+    }
+}
+
+QString Notification::activeWindow() const
+{
+    return d->activeWindowName;
+}
+
+void Notification::updateIdleTime()
+{
+    d->idleTime = KIdleTime::instance()->idleTime();
+}
+
+int Notification::idleTime() const
+{
+    return d->idleTime;
 }
 
 void Notification::captureScreenshot()
@@ -96,6 +127,11 @@ QString Notification::message() const
 void Notification::updateTimestamp()
 {
     d->timestamp = QDateTime::currentDateTime();
+}
+
+QDateTime Notification::timestamp() const
+{
+    return d->timestamp;
 }
 
 void Notification::setActionList(const QStringList& actionList)

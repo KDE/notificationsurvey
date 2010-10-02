@@ -26,6 +26,8 @@
 #include <QtCore/QObject>
 #include <KDE/KWindowSystem>
 
+class QDateTime;
+
 class Notification: public QObject
 {
 Q_OBJECT
@@ -35,6 +37,13 @@ public:
     virtual ~Notification();
 
     void updateTimestamp();
+    QDateTime timestamp() const;
+
+    void updateActiveWindow();
+    QString activeWindow() const;
+
+    void updateIdleTime();
+    int idleTime() const; /// this value is in seconds
 
     void captureScreenshot();
     QPixmap screenshot() const;
@@ -50,6 +59,7 @@ public:
 
     void setActionList(const QStringList& actionList);
     QStringList actionList() const;
+
 
 private:
     class Private;
