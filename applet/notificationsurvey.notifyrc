@@ -1,0 +1,11 @@
+[Global]
+Version=1
+IconName=dialog-information
+Name=NotificationSurvey
+Comment=Notification Survey Applet
+
+[Event/new_diary_entry]
+Name=Notification Diary Study
+Comment=The user needs to enter a new diary entry
+Action=Popup
+
