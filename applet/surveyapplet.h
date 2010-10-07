@@ -30,6 +30,8 @@ class QObject;
 class QPainter;
 class QStyleOptionGraphicsItem;
 
+class Notification;
+
 class NotificationsSurvey: public Plasma::PopupApplet
 {
 Q_OBJECT
@@ -50,6 +52,9 @@ public:
 
 public Q_SLOTS:
     void startSurvey();
+
+    void processNotification(Notification*);
+    void sendSurveyNotification(Notification*);
 
 private:
     void initializeHandler();

@@ -25,6 +25,8 @@
 
 #include <KDE/KSharedConfig>
 
+class Notification;
+
 class SurveyData
 {
 public:
@@ -37,6 +39,12 @@ public:
     void setSurveyStarted(bool isSurveyStarted);
     bool isSurveyStarted() const;
 
+    bool needToDoSurvey() const;
+
+    void increaseNotificationCount();
+    int notificationCount() const;
+
+    void logNotification(Notification*) {}
 
 private:
     KSharedConfig::Ptr m_config;

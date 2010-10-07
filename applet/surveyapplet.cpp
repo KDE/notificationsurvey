@@ -28,6 +28,7 @@
 #include <QGraphicsLinearLayout>
 
 #include <KDE/KIconLoader>
+#include <KDE/KNotification>
 
 #include <Plasma/Extender>
 #include <Plasma/ToolTipContent>
@@ -36,6 +37,7 @@
 
 #include "busywidget.h"
 #include "surveydata.h"
+#include "notification.h"
 #include "notificationhandler.h"
 #include "surveycontrolwidget.h"
 
@@ -150,8 +152,44 @@ void NotificationsSurvey::initExtenderItem(Plasma::ExtenderItem* item)
 void NotificationsSurvey::initializeHandler()
 {
     d->handler->init();
+    connect(d->handler, SIGNAL(notificationCreated(Notification*)),
+            this, SLOT(processNotification(Notification*)));
+    connect(d->handler, SIGNAL(notificationUpdated(Notification*)),
+            this, SLOT(processNotification(Notification*)));
 }
 
+void NotificationsSurvey::processNotification(Notification* notification)
+{
+    d->surveyData->increaseNotificationCount();
+
+    if (d->surveyData->needToDoSurvey())
+    {
+        notification->captureScreenshot();
+        sendSurveyNotification(notification);
+        d->surveyData->logNotification(notification);
+    }
+}
+
+void NotificationsSurvey::sendSurveyNotification(Notification* notification)
+{
+    /* lots of magic strings */
+    QString eventId = QLatin1String("new_diary_entry");
+    KNotification* notify = new KNotification(eventId,
+                                              KNotification::Persistent,
+                                              this);
+    notify->setComponentData(KComponentData("notificationsurvey"));
+    notify->setActions( QStringList() << i18nc("@action", "No")
+                                      << i18nc("@action", 
+                                               "Yes, Create new diary entry"));
+    QString bodyText = i18n("You recently received a notification from %1.\n"
+                            "Would you like to create a new diary entry about"
+                            "this notification?",
+                            notification->applicationName());
+
+    notify->setText(bodyText);
+
+    notify->sendEvent();
+}
 #include "surveyapplet.moc"
 
 /* vim: set et sts=4 sw=4 ts=16 tw=78 : */

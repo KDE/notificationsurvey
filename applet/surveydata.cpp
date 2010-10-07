@@ -28,11 +28,13 @@
 #include <KDE/KConfigGroup>
 #include <KDE/KComponentData>
 
+#include "notification.h"
 
 
 static const QString CONFIG_GROUP_NAME = QString("General");
 static const QString END_DATE_KEY = QString("SurveyEndDate");
 static const QString SURVEY_STARTED_KEY = QString("SurveyStarted");
+static const QString NOTIFICATION_COUNT_KEY = QString("NotificationCount");
 
 SurveyData::SurveyData()
 {
@@ -85,3 +87,24 @@ bool SurveyData::isSurveyStarted() const
     return cg.readEntry(SURVEY_STARTED_KEY, false);
 }
 
+bool SurveyData::needToDoSurvey() const
+{
+    if (notificationCount() > 0 && notificationCount() % 10 == 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+void SurveyData::increaseNotificationCount()
+{
+    KConfigGroup cg(m_config, CONFIG_GROUP_NAME);
+    int newCount = notificationCount() + 1;
+    cg.writeEntry(NOTIFICATION_COUNT_KEY, newCount);
+}
+
+int SurveyData::notificationCount() const
+{
+    KConfigGroup cg(m_config, CONFIG_GROUP_NAME);
+    return cg.readEntry(NOTIFICATION_COUNT_KEY, 0);
+}

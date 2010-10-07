@@ -48,7 +48,7 @@ private slots:
     void dataUpdated(const QString& source, 
                      const Plasma::DataEngine::Data &data);
     void teardownNotification(const QString& source);
-    
+
 
 private:
     Plasma::DataEngine* m_engine;
