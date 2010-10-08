@@ -25,6 +25,7 @@
 #include <QtCore/QDir>
 #include <QtCore/QFileInfo>
 
+#include <KDE/KDebug>
 #include <KDE/KConfigGroup>
 #include <KDE/KComponentData>
 
@@ -98,13 +99,15 @@ bool SurveyData::needToDoSurvey() const
 
 void SurveyData::increaseNotificationCount()
 {
-    KConfigGroup cg(m_config, CONFIG_GROUP_NAME);
     int newCount = notificationCount() + 1;
+    KConfigGroup cg(m_config, CONFIG_GROUP_NAME);
     cg.writeEntry(NOTIFICATION_COUNT_KEY, newCount);
+    m_config->sync();
 }
 
 int SurveyData::notificationCount() const
 {
     KConfigGroup cg(m_config, CONFIG_GROUP_NAME);
-    return cg.readEntry(NOTIFICATION_COUNT_KEY, 0);
+    int count = cg.readEntry(NOTIFICATION_COUNT_KEY, 0);
+    return count;
 }
