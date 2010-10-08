@@ -182,7 +182,7 @@ void NotificationsSurvey::sendSurveyNotification(Notification* notification)
                                       << i18nc("@action", 
                                                "Yes, Create new diary entry"));
     QString bodyText = i18n("You recently received a notification from %1.\n"
-                            "Would you like to create a new diary entry about"
+                            "Would you like to create a new diary entry about "
                             "this notification?",
                             notification->applicationName());
 
