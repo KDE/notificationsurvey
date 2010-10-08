@@ -92,6 +92,7 @@ void NotificationsSurvey::init()
     Plasma::ToolTipManager::self()->setContent(this, data);
 
     if (d->surveyData->isSurveyStarted()) {
+        kDebug() << "survey has started. initializing handler";
         initializeHandler();
     }
 
@@ -152,8 +153,6 @@ void NotificationsSurvey::initExtenderItem(Plasma::ExtenderItem* item)
 void NotificationsSurvey::initializeHandler()
 {
     d->handler->init();
-    connect(d->handler, SIGNAL(notificationCreated(Notification*)),
-            this, SLOT(processNotification(Notification*)));
     connect(d->handler, SIGNAL(notificationUpdated(Notification*)),
             this, SLOT(processNotification(Notification*)));
 }
@@ -177,6 +176,7 @@ void NotificationsSurvey::sendSurveyNotification(Notification* notification)
     KNotification* notify = new KNotification(eventId,
                                               KNotification::Persistent,
                                               this);
+    notify->setFlags(KNotification::Persistent);
     notify->setComponentData(KComponentData("notificationsurvey"));
     notify->setActions( QStringList() << i18nc("@action", "No")
                                       << i18nc("@action", 
