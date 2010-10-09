@@ -23,7 +23,10 @@
 #ifndef SURVEYCONFIGURATION_H
 #define SURVEYCONFIGURATION_H
 
+#include <QtCore/QFileInfo>
 #include <KDE/KSharedConfig>
+
+class QString;
 
 class Notification;
 
@@ -45,6 +48,9 @@ public:
     int notificationCount() const;
 
     void logNotification(Notification*);
+
+private:
+    QString dataPath(const QString& file);
 
 private:
     KSharedConfig::Ptr m_config;

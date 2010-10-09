@@ -23,8 +23,10 @@
 #include "surveydata.h"
 
 #include <QtCore/QDir>
+#include <QtGui/QPixmap>
 #include <QtCore/QFileInfo>
 
+#include <KDE/KUser>
 #include <KDE/KDebug>
 #include <KDE/KConfigGroup>
 #include <KDE/KComponentData>
@@ -39,19 +41,9 @@ static const QString NOTIFICATION_COUNT_KEY = QString("NotificationCount");
 
 SurveyData::SurveyData()
 {
-    QDir homeDir;
-    homeDir.cd(QDir::homePath());
-    QFileInfo surveyFileInfo(homeDir, ".notificationsurvey");
-    if (!surveyFileInfo.exists())
-    {
-        homeDir.mkdir(".notificationsurvey");
-    }
-
-    homeDir.cd(".notificationsurvey");
     KComponentData componentData(QByteArray("notificationsurvey"));
-    m_config = KSharedConfig::openConfig(componentData,
-                                         surveyFileInfo.canonicalFilePath());
 
+    m_config = KSharedConfig::openConfig(componentData);
 }
 
 SurveyData::~SurveyData()
@@ -113,5 +105,52 @@ int SurveyData::notificationCount() const
 
 void SurveyData::logNotification(Notification* notification)
 {
+    QString userName = KUser(KUser::UseRealUserID).loginName();
+    if (userName.isEmpty()) {
+        kWarning() << "unable to get user name. logging skipped!";
+    }
 
+    QString fileName = userName;
+    fileName += "-logs.csv";
+    QFile logFile(dataPath(fileName));
+
+    if (logFile.open(QIODevice::WriteOnly | QIODevice::Append)) {
+        QTextStream csvOutput(&logFile);
+        csvOutput << notification->timestamp().toString() << ",";
+        csvOutput << notification->applicationName() << ",";
+        csvOutput << notification->summary() << ",";
+        csvOutput << notification->message() << ",";
+        csvOutput << notification->actionList().join("|") << ",";
+        csvOutput << ","; // hints, which will always be blank
+        csvOutput << notification->activeWindow() << ",";
+        csvOutput << notification->idleTime() << ",";
+        if (notification->tookSurvey()) {
+            csvOutput << "yes" << ",";
+        } else {
+            csvOutput << "no" << ",";
+        }
+
+        if (notification->screenshot().isNull()) {
+            csvOutput << "no";
+        } else {
+            csvOutput << "yes";
+        }
+
+        csvOutput << endl;
+    }
+}
+
+QString SurveyData::dataPath(const QString& file)
+{
+    QDir homeDir;
+    homeDir.cd(QDir::homePath());
+    QFileInfo surveyFileInfo(homeDir, ".notificationsurvey");
+    if (!surveyFileInfo.exists())
+    {
+        homeDir.mkdir(".notificationsurvey");
+    }
+
+    homeDir.cd(".notificationsurvey");
+
+    return homeDir.filePath(file);
 }

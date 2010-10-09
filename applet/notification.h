@@ -33,6 +33,8 @@ class Notification: public QObject
 Q_OBJECT
 
 public:
+    enum NotificationSurveyStatus { Unknown = -1, No = 0, Yes = 1 };
+
     Notification(QObject* parent = 0);
     virtual ~Notification();
 
@@ -47,6 +49,7 @@ public:
 
     void captureScreenshot();
     QPixmap screenshot() const;
+    void resetScreenshot();
 
     void setApplicationName(const QString& appName);
     QString applicationName() const;
@@ -60,10 +63,12 @@ public:
     void setActionList(const QStringList& actionList);
     QStringList actionList() const;
 
+    int tookSurvey() const;
+    void resetSurveyStatus();
 
 private:
     class Private;
-    Private* const d; 
+    Private* const d;
 
 };
 

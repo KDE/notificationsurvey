@@ -35,6 +35,10 @@
 class Notification::Private
 {
 public:
+    Private() : idleTime(0), surveyTaken(Notification::Unknown)
+    {
+    }
+
     QPixmap screenshot;
     QString applicationName;
     QString summary;
@@ -43,7 +47,7 @@ public:
     QStringList actionList;
     QString activeWindowName;
     int idleTime;
-
+    int surveyTaken;
 };
 
 Notification::Notification(QObject* parent)
@@ -92,6 +96,11 @@ void Notification::captureScreenshot()
 QPixmap Notification::screenshot() const
 {
     return d->screenshot;
+}
+
+void Notification::resetScreenshot()
+{
+    d->screenshot = QPixmap();
 }
 
 void Notification::setApplicationName(const QString& appName)
@@ -143,6 +152,17 @@ QStringList Notification::actionList() const
 {
     return d->actionList;
 }
+
+int Notification::tookSurvey() const
+{
+    return d->surveyTaken;
+}
+
+void Notification::resetSurveyStatus()
+{
+    d->surveyTaken = Unknown;
+}
+
 
 #include "notification.moc"
 
