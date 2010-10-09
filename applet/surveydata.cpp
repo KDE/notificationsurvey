@@ -48,7 +48,6 @@ SurveyData::SurveyData()
     }
 
     homeDir.cd(".notificationsurvey");
-    surveyFileInfo.setFile(homeDir, ".surveystats");
     KComponentData componentData(QByteArray("notificationsurvey"));
     m_config = KSharedConfig::openConfig(componentData,
                                          surveyFileInfo.canonicalFilePath());
