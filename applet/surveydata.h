@@ -44,7 +44,7 @@ public:
     void increaseNotificationCount();
     int notificationCount() const;
 
-    void logNotification(Notification*) {}
+    void logNotification(Notification*);
 
 private:
     KSharedConfig::Ptr m_config;

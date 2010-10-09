@@ -111,3 +111,8 @@ int SurveyData::notificationCount() const
     int count = cg.readEntry(NOTIFICATION_COUNT_KEY, 0);
     return count;
 }
+
+void SurveyData::logNotification(Notification* notification)
+{
+
+}
