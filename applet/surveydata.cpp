@@ -140,7 +140,35 @@ void SurveyData::logNotification(Notification* notification)
     }
 }
 
-QString SurveyData::dataPath(const QString& file)
+void SurveyData::startLogFile() const
+{
+    QString userName = KUser(KUser::UseRealUserID).loginName();
+    if (userName.isEmpty()) {
+        kWarning() << "unable to get user name. logging skipped!";
+    }
+
+    QString fileName = userName;
+    fileName += "-logs.csv";
+    QFile logFile(dataPath(fileName));
+
+    if (logFile.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
+        QTextStream csvOutput(&logFile);
+        csvOutput << "Timestamp" << ",";
+        csvOutput << "Application Name" << ",";
+        csvOutput << "Summary" << ",";
+        csvOutput << "Message" << ",";
+        csvOutput << "Actions" << ",";
+        csvOutput << "Hints" << ","; // hints, which will always be blank
+        csvOutput << "Active Window" << ",";
+        csvOutput << "Idle Time" << ",";
+        csvOutput << "Took Survey?" << ",";
+        csvOutput << "Screenshot?";
+        csvOutput << endl;
+    }
+
+}
+
+QString SurveyData::dataPath(const QString& file) const
 {
     QDir homeDir;
     homeDir.cd(QDir::homePath());

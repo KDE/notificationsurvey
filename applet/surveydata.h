@@ -47,10 +47,11 @@ public:
     void increaseNotificationCount();
     int notificationCount() const;
 
+    void startLogFile() const;
     void logNotification(Notification*);
 
 private:
-    QString dataPath(const QString& file);
+    QString dataPath(const QString& file) const;
 
 private:
     KSharedConfig::Ptr m_config;
