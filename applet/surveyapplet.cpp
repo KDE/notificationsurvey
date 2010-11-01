@@ -126,6 +126,7 @@ void NotificationsSurvey::startSurvey()
     surveyEndDate = surveyEndDate.addDays(28); //convert from magic number
 
     d->surveyData->setSurveyEndDate(surveyEndDate);
+    d->surveyData->startLogFile();
 
 }
 
