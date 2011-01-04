@@ -48,7 +48,6 @@ public:
 
     bool isSurveyStarted() const;
 
-    void initExtenderItem(Plasma::ExtenderItem* item);
 
 public Q_SLOTS:
     void startSurvey();
@@ -58,6 +57,7 @@ public Q_SLOTS:
 
 private:
     void initializeHandler();
+    void createExtenderItem(Plasma::ExtenderItem* item);
 
 private:
     class Private;

@@ -112,7 +112,7 @@ void NotificationsSurvey::init()
     eitem->setName("notifications");
     eitem->setIcon("dialog-information");
     eitem->config().writeEntry("type", "notificationsurvey");
-    initExtenderItem(eitem);
+    createExtenderItem(eitem);
     extender()->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
 }
@@ -140,7 +140,7 @@ bool NotificationsSurvey::isSurveyStarted() const
     return d->surveyData->isSurveyStarted();
 }
 
-void NotificationsSurvey::initExtenderItem(Plasma::ExtenderItem* item)
+void NotificationsSurvey::createExtenderItem(Plasma::ExtenderItem* item)
 {
     kDebug() << "initializing extender item";
     if (item->name() == "notifications") {
