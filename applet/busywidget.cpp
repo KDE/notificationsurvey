@@ -45,6 +45,9 @@ void BusyWidget::paint(QPainter* painter,
                        const QStyleOptionGraphicsItem* option,
                        QWidget* widget)
 {
+    Q_UNUSED(option);
+    Q_UNUSED(widget);
+
     QRectF iconRect(0,
                     0,
                     qMin(size().width(), size().height()),
@@ -57,7 +60,7 @@ void BusyWidget::paint(QPainter* painter,
 
 void BusyWidget::setState(State state)
 {
-
+    Q_UNUSED(state);
 }
 
 void BusyWidget::resizeEvent(QGraphicsSceneResizeEvent*)
