@@ -3,7 +3,7 @@ Name=Notification Survey
 Comment=KDE Notification Survey
 Type=Service
 ServiceTypes=Plasma/Applet
- 
+
 X-KDE-Library=plasma_applet_notificationsurvey
 X-KDE-PluginInfo-Author=Matt Rogers
 X-KDE-PluginInfo-Email=mattr@kde.org
