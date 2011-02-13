@@ -2,10 +2,26 @@
 Version=1
 IconName=dialog-information
 Name=NotificationSurvey
+Name[pt]=NotificationSurvey
+Name[sv]=Underrättelseenkät
+Name[uk]=NotificationSurvey
+Name[x-test]=xxNotificationSurveyxx
 Comment=Notification Survey Applet
+Comment[pt]='Applet' de Questionários da Notificação
+Comment[sv]=Miniprogram med underrättelseenkät
+Comment[uk]=Панель огляду сповіщень
+Comment[x-test]=xxNotification Survey Appletxx
 
 [Event/new_diary_entry]
 Name=Notification Diary Study
+Name[pt]=Estudo Diário da Notificação
+Name[sv]=Underrättelsedagboksstudie
+Name[uk]=Вивчення журналу сповіщень
+Name[x-test]=xxNotification Diary Studyxx
 Comment=The user needs to enter a new diary entry
+Comment[pt]=O utilizador necessita de introduzir um novo item do diário
+Comment[sv]=Användaren måste skriva in en ny dagboksanteckning
+Comment[uk]=Користувачеві потрібно ввести новий запис журналу
+Comment[x-test]=xxThe user needs to enter a new diary entryxx
 Action=Popup
 

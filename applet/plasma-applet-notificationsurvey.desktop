@@ -1,6 +1,14 @@
 [Desktop Entry]
 Name=Notification Survey
+Name[pt]=Questionário da Notificação
+Name[sv]=Underrättelseenkät
+Name[uk]=Огляд сповіщень
+Name[x-test]=xxNotification Surveyxx
 Comment=KDE Notification Survey
+Comment[pt]=Questionário da Notificação do KDE
+Comment[sv]=KDE underrättelseenkät
+Comment[uk]=Огляд сповіщень KDE
+Comment[x-test]=xxKDE Notification Surveyxx
 Type=Service
 ServiceTypes=Plasma/Applet
 
