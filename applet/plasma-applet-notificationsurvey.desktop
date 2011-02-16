@@ -1,11 +1,15 @@
 [Desktop Entry]
 Name=Notification Survey
+Name[nl]=Overzicht van meldingen
 Name[pt]=Questionário da Notificação
+Name[pt_BR]=Avaliação de notificação
 Name[sv]=Underrättelseenkät
 Name[uk]=Огляд сповіщень
 Name[x-test]=xxNotification Surveyxx
 Comment=KDE Notification Survey
+Comment[nl]=KDE overzicht van meldingen
 Comment[pt]=Questionário da Notificação do KDE
+Comment[pt_BR]=Avaliação de notificação do KDE
 Comment[sv]=KDE underrättelseenkät
 Comment[uk]=Огляд сповіщень KDE
 Comment[x-test]=xxKDE Notification Surveyxx
