@@ -2,6 +2,7 @@
 Version=1
 IconName=dialog-information
 Name=NotificationSurvey
+Name[es]=NotificationSurvey
 Name[nl]=OverzichtMeldingen
 Name[pt]=NotificationSurvey
 Name[pt_BR]=NotificationSurvey
@@ -9,6 +10,7 @@ Name[sv]=Underrättelseenkät
 Name[uk]=NotificationSurvey
 Name[x-test]=xxNotificationSurveyxx
 Comment=Notification Survey Applet
+Comment[es]=Miniaplicación de sondeo de notificaciones
 Comment[nl]=Applet voor overzicht van meldingen
 Comment[pt]='Applet' de Questionários da Notificação
 Comment[pt_BR]=Miniaplicativo de avaliação de notificação
@@ -18,12 +20,14 @@ Comment[x-test]=xxNotification Survey Appletxx
 
 [Event/new_diary_entry]
 Name=Notification Diary Study
+Name[es]=Estudio del diario de notificaciones
 Name[pt]=Estudo Diário da Notificação
 Name[pt_BR]=Estudo diário da notificação
 Name[sv]=Underrättelsedagboksstudie
 Name[uk]=Вивчення журналу сповіщень
 Name[x-test]=xxNotification Diary Studyxx
 Comment=The user needs to enter a new diary entry
+Comment[es]=El usuario necesita introducir una nueva entrada del diario
 Comment[nl]=De gebruiker dient een nieuw dagboekitem in te voeren
 Comment[pt]=O utilizador necessita de introduzir um novo item do diário
 Comment[pt_BR]=O usuário precisa introduzir um novo item de diário
