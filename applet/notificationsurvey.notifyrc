@@ -21,6 +21,7 @@ Comment[x-test]=xxNotification Survey Appletxx
 [Event/new_diary_entry]
 Name=Notification Diary Study
 Name[es]=Estudio del diario de notificaciones
+Name[nl]=Dagboekstudie van meldingen
 Name[pt]=Estudo Diário da Notificação
 Name[pt_BR]=Estudo diário da notificação
 Name[sv]=Underrättelsedagboksstudie
