@@ -21,7 +21,7 @@
  *
  */
 
-#include "surveyapplet.h"
+#include "notificationsurveyapplet.h"
 
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
@@ -41,9 +41,9 @@
 #include "notificationhandler.h"
 #include "surveycontrolwidget.h"
 
-K_EXPORT_PLASMA_APPLET(notificationsurvey, NotificationsSurvey)
+K_EXPORT_PLASMA_APPLET(notificationsurvey, NotificationSurveyApplet)
 
-class NotificationsSurvey::Private
+class NotificationSurveyApplet::Private
 {
 public:
     Private()
@@ -69,22 +69,22 @@ public:
     SurveyData* surveyData;
 };
 
-NotificationsSurvey::NotificationsSurvey(QObject* parent,
+NotificationSurveyApplet::NotificationSurveyApplet(QObject* parent,
                                          const QVariantList &arguments)
     : Plasma::PopupApplet(parent, arguments),
-      d(new NotificationsSurvey::Private)
+      d(new NotificationSurveyApplet::Private)
 {
     setBackgroundHints(NoBackground);
     setAspectRatioMode(Plasma::IgnoreAspectRatio);
     setPopupIcon(QIcon());
 }
 
-NotificationsSurvey::~NotificationsSurvey()
+NotificationSurveyApplet::~NotificationSurveyApplet()
 {
     delete d;
 }
 
-void NotificationsSurvey::init()
+void NotificationSurveyApplet::init()
 {
     Plasma::ToolTipContent data(i18n("Listening for notifications"),
                                 QString(),
@@ -93,6 +93,7 @@ void NotificationsSurvey::init()
 
     if (d->surveyData->isSurveyStarted()) {
         kDebug() << "survey has started. initializing handler";
+        /* TODO check to make sure the survey isn't over */
         initializeHandler();
     }
 
@@ -118,7 +119,7 @@ void NotificationsSurvey::init()
 }
 
 
-void NotificationsSurvey::startSurvey()
+void NotificationSurveyApplet::startSurvey()
 {
     d->surveyData->setSurveyStarted(true);
 
@@ -130,17 +131,17 @@ void NotificationsSurvey::startSurvey()
 
 }
 
-QDateTime NotificationsSurvey::surveyEndDate() const
+QDateTime NotificationSurveyApplet::surveyEndDate() const
 {
     return d->surveyData->surveyEndDate();
 }
 
-bool NotificationsSurvey::isSurveyStarted() const
+bool NotificationSurveyApplet::isSurveyStarted() const
 {
     return d->surveyData->isSurveyStarted();
 }
 
-void NotificationsSurvey::createExtenderItem(Plasma::ExtenderItem* item)
+void NotificationSurveyApplet::createExtenderItem(Plasma::ExtenderItem* item)
 {
     kDebug() << "initializing extender item";
     if (item->name() == "notifications") {
@@ -151,14 +152,14 @@ void NotificationsSurvey::createExtenderItem(Plasma::ExtenderItem* item)
     }
 }
 
-void NotificationsSurvey::initializeHandler()
+void NotificationSurveyApplet::initializeHandler()
 {
     d->handler->init();
     connect(d->handler, SIGNAL(notificationUpdated(Notification*)),
             this, SLOT(processNotification(Notification*)));
 }
 
-void NotificationsSurvey::processNotification(Notification* notification)
+void NotificationSurveyApplet::processNotification(Notification* notification)
 {
     d->surveyData->increaseNotificationCount();
 
@@ -170,7 +171,7 @@ void NotificationsSurvey::processNotification(Notification* notification)
     }
 }
 
-void NotificationsSurvey::sendSurveyNotification(Notification* notification)
+void NotificationSurveyApplet::sendSurveyNotification(Notification* notification)
 {
     /* lots of magic strings */
     QString eventId = QLatin1String("new_diary_entry");
@@ -191,6 +192,6 @@ void NotificationsSurvey::sendSurveyNotification(Notification* notification)
 
     notify->sendEvent();
 }
-#include "surveyapplet.moc"
+#include "notificationsurveyapplet.moc"
 
 /* vim: set et sts=4 sw=4 ts=16 tw=78 : */

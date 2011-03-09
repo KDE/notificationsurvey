@@ -32,15 +32,15 @@ class QStyleOptionGraphicsItem;
 
 class Notification;
 
-class NotificationsSurvey: public Plasma::PopupApplet
+class NotificationSurveyApplet: public Plasma::PopupApplet
 {
 Q_OBJECT
 
 public:
-    explicit NotificationsSurvey(QObject* parent = 0,
-                                 const QVariantList &arguments = QVariantList());
+    explicit NotificationSurveyApplet(QObject* parent = 0,
+                                      const QVariantList &arguments = QVariantList());
 
-    virtual ~NotificationsSurvey();
+    virtual ~NotificationSurveyApplet();
 
     virtual void init();
 

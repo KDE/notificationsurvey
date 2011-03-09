@@ -20,6 +20,9 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifndef SURVEYCONTROLWIDGET_H
+#define SURVEYCONTROLWIDGET_H
+
 #include <QtGui/QGraphicsWidget>
 
 namespace Plasma
@@ -30,7 +33,7 @@ namespace Plasma
 }
 
 class QGraphicsGridLayout;
-class NotificationsSurvey;
+class NotificationSurveyApplet;
 
 class SurveyControlWidget : public QGraphicsWidget
 {
@@ -47,11 +50,12 @@ private slots:
     void startSurvey();
 
 private:
-    NotificationsSurvey* m_applet;
+    NotificationSurveyApplet* m_applet;
     QGraphicsGridLayout* m_layout;
     Plasma::PushButton* m_startButton;
     Plasma::Label* m_surveyStatus;
     Plasma::Label* m_surveyEndDate;
 };
 
+#endif
 /* vim: set et fenc= ff=unix sts=4 sw=4 ts=16 : */

@@ -2,7 +2,7 @@ include_directories( ${CMAKE_CURRENT_SOURCE_DIR} )
 
 # We add our source code here
 set(notificationsurvey_SRCS
-    surveyapplet.cpp
+    notificationsurveyapplet.cpp
     notificationhandler.cpp
     notification.cpp
     busywidget.cpp

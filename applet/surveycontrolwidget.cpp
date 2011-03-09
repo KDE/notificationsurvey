@@ -26,13 +26,13 @@
 #include <Plasma/PushButton>
 #include <Plasma/Label>
 
-#include "surveyapplet.h"
+#include "notificationsurveyapplet.h"
 
 SurveyControlWidget::SurveyControlWidget(Plasma::PopupApplet* parent)
  : QGraphicsWidget(parent),
    m_layout(0)
 {
-    m_applet = qobject_cast<NotificationsSurvey*>(parent);
+    m_applet = qobject_cast<NotificationSurveyApplet*>(parent);
 
 
     m_startButton = new Plasma::PushButton(this);
