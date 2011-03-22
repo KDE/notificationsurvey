@@ -40,6 +40,7 @@
 #include "notification.h"
 #include "notificationhandler.h"
 #include "surveycontrolwidget.h"
+#include "diaryentrywidget.h"
 
 K_EXPORT_PLASMA_APPLET(notificationsurvey, NotificationSurveyApplet)
 
@@ -190,8 +191,26 @@ void NotificationSurveyApplet::sendSurveyNotification(Notification* notification
 
     notify->setText(bodyText);
 
+    connect(notify, SIGNAL(activated(unsigned int)),
+            this, SLOT(handleNotificationActivation(unsigned int)));
+
     notify->sendEvent();
+
 }
+
+void NotificationSurveyApplet::handleNotificationActivation(unsigned int action)
+{
+    kDebug() << "notification to handle! action:" << action;
+    if (action == 2 /*they clicked 'yes' */)
+    {
+        DiaryEntryWidget* diaryEntry = new DiaryEntryWidget;
+        diaryEntry->show();
+    }
+
+}
+
+
+
 #include "notificationsurveyapplet.moc"
 
 /* vim: set et sts=4 sw=4 ts=16 tw=78 : */

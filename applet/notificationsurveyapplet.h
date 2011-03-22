@@ -55,6 +55,9 @@ public Q_SLOTS:
     void processNotification(Notification*);
     void sendSurveyNotification(Notification*);
 
+private Q_SLOTS:
+    void handleNotificationActivation(unsigned int action);
+
 private:
     void initializeHandler();
     void createExtenderItem(Plasma::ExtenderItem* item);
