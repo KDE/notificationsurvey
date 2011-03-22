@@ -8,7 +8,12 @@ set(notificationsurvey_SRCS
     busywidget.cpp
     surveycontrolwidget.cpp
     surveydata.cpp
+    diaryentrywidget.cpp
     )
+
+kde4_add_ui_files(notificationsurvey_SRCS
+                  newentrywidget.ui)
+
 
 # Now make sure all files get to the right place
 kde4_add_plugin(plasma_applet_notificationsurvey 
