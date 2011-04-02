@@ -64,6 +64,9 @@ void SurveyControlWidget::updateSurveyStatus()
         m_surveyEndDate->hide();
         m_startButton->show();
     } else {
+        m_surveyStatus->setText(i18n("Survey in progress")); 
+        m_surveyEndDate->setText(i18nc("placeholder is a date", "Ends: %1")
+                                 .arg(m_applet->surveyEndDate().toString()));
         m_startButton->hide();
         m_surveyStatus->show();
         m_surveyEndDate->show();
@@ -84,3 +87,6 @@ void SurveyControlWidget::startSurvey()
     m_applet->startSurvey();
     updateSurveyStatus();
 }
+
+/* vim: set et sts=4 sw=4 tw=78 : */
+
