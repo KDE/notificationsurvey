@@ -8,7 +8,7 @@ set(notificationsurvey_SRCS
     busywidget.cpp
     surveycontrolwidget.cpp
     surveydata.cpp
-    diaryentrywidget.cpp
+    diaryentrydialog.cpp
     )
 
 kde4_add_ui_files(notificationsurvey_SRCS

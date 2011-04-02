@@ -20,19 +20,25 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "diaryentrywidget.h"
+#ifndef DIARYENTRYDIALOG_H
+#define DIARYENTRYDIALOG_H
 
-DiaryEntryWidget::DiaryEntryWidget(QWidget* parent)
-    : QWidget(parent)
+#include <KDE/KDialog>
+
+#include "ui_newentrywidget.h"
+
+class DiaryEntryDialog : public KDialog
 {
-    m_designerUi.setupUi(this);
-}
-
-DiaryEntryWidget::~DiaryEntryWidget()
-{
-
-}
+public:
+    DiaryEntryDialog(QWidget* parent = 0);
+    virtual ~DiaryEntryDialog();
 
 
+private:
+    Ui::NewEntryWidget m_designerUi;
+
+};
+
+#endif
 
 /* vim: set et sts=4 sw=4 ts=16 tw=78 : */

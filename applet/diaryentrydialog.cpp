@@ -1,5 +1,5 @@
 /*
- * Notifications Survey Diary Entry Widget
+ * Notifications Survey Diary Entry Dialog
  *
  * Copyright 2011 Matt Rogers <mattr@kde.org>
  *
@@ -20,25 +20,27 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DIARYENTRYWIDGET_H
-#define DIARYENTRYWIDGET_H
+#include "diaryentrydialog.h"
 
-#include <QtGui/QWidget>
-
-#include "ui_newentrywidget.h"
-
-class DiaryEntryWidget : public QWidget
+DiaryEntryDialog::DiaryEntryDialog(QWidget* parent)
+    : KDialog(parent)
 {
-public:
-    DiaryEntryWidget(QWidget* parent = 0);
-    virtual ~DiaryEntryWidget();
+    QWidget* w = new QWidget(this);
+    m_designerUi.setupUi(w);
+    setMainWidget(w);
+
+    setCaption("New Diary Entry");
+    setButtons(KDialog::Ok | KDialog::Cancel);
+
+    setEscapeButton(KDialog::Cancel);
+    setDefaultButton(KDialog::Ok);
+}
+
+DiaryEntryDialog::~DiaryEntryDialog()
+{
+
+}
 
 
-private:
-    Ui::NewEntryWidget m_designerUi;
-
-};
-
-#endif
 
 /* vim: set et sts=4 sw=4 ts=16 tw=78 : */

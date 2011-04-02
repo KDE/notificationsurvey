@@ -40,7 +40,7 @@
 #include "notification.h"
 #include "notificationhandler.h"
 #include "surveycontrolwidget.h"
-#include "diaryentrywidget.h"
+#include "diaryentrydialog.h"
 
 K_EXPORT_PLASMA_APPLET(notificationsurvey, NotificationSurveyApplet)
 
@@ -203,7 +203,7 @@ void NotificationSurveyApplet::handleNotificationActivation(unsigned int action)
     kDebug() << "notification to handle! action:" << action;
     if (action == 2 /*they clicked 'yes' */)
     {
-        DiaryEntryWidget* diaryEntry = new DiaryEntryWidget;
+        DiaryEntryDialog* diaryEntry = new DiaryEntryDialog;
         diaryEntry->show();
     }
 
