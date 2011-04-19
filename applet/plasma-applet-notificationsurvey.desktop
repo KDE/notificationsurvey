@@ -1,6 +1,7 @@
 [Desktop Entry]
 Name=Notification Survey
 Name[es]=Sondeo de notificaciones
+Name[et]=Märguannete uurimine
 Name[nl]=Overzicht van meldingen
 Name[pt]=Questionário da Notificação
 Name[pt_BR]=Avaliação de notificação
@@ -9,6 +10,7 @@ Name[uk]=Огляд сповіщень
 Name[x-test]=xxNotification Surveyxx
 Comment=KDE Notification Survey
 Comment[es]=Sondeo de notificaciones para KDE
+Comment[et]=KDE märguannete uurimine
 Comment[nl]=KDE overzicht van meldingen
 Comment[pt]=Questionário da Notificação do KDE
 Comment[pt_BR]=Avaliação de notificação do KDE
