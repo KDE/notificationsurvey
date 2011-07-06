@@ -2,6 +2,7 @@
 Name=Notification Survey
 Name[es]=Sondeo de notificaciones
 Name[et]=Märguannete uurimine
+Name[km]=ការ​ជូន​ដំណឹង​អំពី​ការ​ស្ទង់​មតិ
 Name[nl]=Overzicht van meldingen
 Name[pt]=Questionário da Notificação
 Name[pt_BR]=Avaliação de notificação
@@ -11,6 +12,7 @@ Name[x-test]=xxNotification Surveyxx
 Comment=KDE Notification Survey
 Comment[es]=Sondeo de notificaciones para KDE
 Comment[et]=KDE märguannete uurimine
+Comment[km]=ការ​ជូន​ដំណឹង​អំពី​ការ​ស្ទង់មតិ​របស់ KDE
 Comment[nl]=KDE overzicht van meldingen
 Comment[pt]=Questionário da Notificação do KDE
 Comment[pt_BR]=Avaliação de notificação do KDE
