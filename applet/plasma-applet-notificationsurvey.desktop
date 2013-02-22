@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=Notification Survey
+Name[de]=Benachrichtigungs-Studie
 Name[es]=Sondeo de notificaciones
 Name[et]=Märguannete uurimine
 Name[fr]=Vue d'ensemble des notifications
@@ -15,6 +16,7 @@ Name[tr]=Bildirim İncelemesi
 Name[uk]=Огляд сповіщень
 Name[x-test]=xxNotification Surveyxx
 Comment=KDE Notification Survey
+Comment[de]=Benachrichtigungs-Studie für KDE
 Comment[es]=Sondeo de notificaciones para KDE
 Comment[et]=KDE märguannete uurimine
 Comment[fr]=Vue d'ensemble des notifications pour KDE
