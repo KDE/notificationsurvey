@@ -37,6 +37,7 @@ Comment[x-test]=xxNotification Survey Appletxx
 
 [Event/new_diary_entry]
 Name=Notification Diary Study
+Name[de]=Tagebuch der Benachrichtigungs-Studie
 Name[es]=Estudio del diario de notificaciones
 Name[et]=Märguannete päeviku uurimine
 Name[fr]=Étude quotidienne des notifications
