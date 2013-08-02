@@ -2,6 +2,7 @@
 Version=1
 IconName=dialog-information
 Name=NotificationSurvey
+Name[bs]=NotificationSurvey
 Name[de]=Benachrichtigungs-Studie
 Name[es]=NotificationSurvey
 Name[et]=NotificationSurvey
@@ -20,6 +21,7 @@ Name[tr]=Bildirimİncelemesi
 Name[uk]=NotificationSurvey
 Name[x-test]=xxNotificationSurveyxx
 Comment=Notification Survey Applet
+Comment[bs]=Programčić za napomenske ankete
 Comment[de]=Miniprogramm der Benachrichtigungs-Studie
 Comment[es]=Miniaplicación de sondeo de notificaciones
 Comment[et]=Märguannete uurimise aplett
