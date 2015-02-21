@@ -43,6 +43,7 @@ Comment[x-test]=xxNotification Survey Appletxx
 
 [Event/new_diary_entry]
 Name=Notification Diary Study
+Name[bs]=Studija dnevnika napomena
 Name[de]=Tagebuch der Benachrichtigungs-Studie
 Name[es]=Estudio del diario de notificaciones
 Name[et]=Märguannete päeviku uurimine
@@ -61,6 +62,7 @@ Name[tr]=Bildirim Günlük Araştırması
 Name[uk]=Вивчення журналу сповіщень
 Name[x-test]=xxNotification Diary Studyxx
 Comment=The user needs to enter a new diary entry
+Comment[bs]=Korisnik treba da unese novi unos u dnevnik
 Comment[de]=Der Benutzer muss einen neuen Tagebucheintrag anlegen
 Comment[es]=El usuario necesita introducir una nueva entrada del diario
 Comment[et]=Kasutajal tuleb sisestada päevikusse uus kirje
